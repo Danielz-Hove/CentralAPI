@@ -1329,6 +1329,7 @@
         },
         {
             "name": "laravel/sanctum",
+<<<<<<< HEAD
             "version": "v4.0.7",
             "source": {
                 "type": "git",
@@ -1339,22 +1340,47 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/laravel/sanctum/zipball/698064236a46df016e64a7eb059b1414e0b281df",
                 "reference": "698064236a46df016e64a7eb059b1414e0b281df",
+=======
+            "version": "v4.0.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel/sanctum.git",
+                "reference": "ec1dd9ddb2ab370f79dfe724a101856e0963f43c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel/sanctum/zipball/ec1dd9ddb2ab370f79dfe724a101856e0963f43c",
+                "reference": "ec1dd9ddb2ab370f79dfe724a101856e0963f43c",
+>>>>>>> 72b3f0a (commit)
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
+<<<<<<< HEAD
                 "illuminate/console": "^11.0",
                 "illuminate/contracts": "^11.0",
                 "illuminate/database": "^11.0",
                 "illuminate/support": "^11.0",
+=======
+                "illuminate/console": "^11.0|^12.0",
+                "illuminate/contracts": "^11.0|^12.0",
+                "illuminate/database": "^11.0|^12.0",
+                "illuminate/support": "^11.0|^12.0",
+>>>>>>> 72b3f0a (commit)
                 "php": "^8.2",
                 "symfony/console": "^7.0"
             },
             "require-dev": {
                 "mockery/mockery": "^1.6",
+<<<<<<< HEAD
                 "orchestra/testbench": "^9.0",
                 "phpstan/phpstan": "^1.10",
                 "phpunit/phpunit": "^10.5"
+=======
+                "orchestra/testbench": "^9.0|^10.0",
+                "phpstan/phpstan": "^1.10",
+                "phpunit/phpunit": "^11.3"
+>>>>>>> 72b3f0a (commit)
             },
             "type": "library",
             "extra": {
@@ -1389,7 +1415,11 @@
                 "issues": "https://github.com/laravel/sanctum/issues",
                 "source": "https://github.com/laravel/sanctum"
             },
+<<<<<<< HEAD
             "time": "2024-12-11T16:40:21+00:00"
+=======
+            "time": "2025-01-26T19:34:36+00:00"
+>>>>>>> 72b3f0a (commit)
         },
         {
             "name": "laravel/serializable-closure",
