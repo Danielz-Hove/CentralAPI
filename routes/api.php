@@ -13,7 +13,7 @@ Route::get('/user', function (Request $request) {
 
 Route::get('/users', [UserController::class, 'list']);    // List all users
 Route::get('/users/{user}', [UserController::class, 'index']); // Show a user
-Route::post('/users', [UserController::class, 'create'])->middleware('auth:sanctum');   // Create a new user
+Route::post('/users', [UserController::class, 'create']);   // Create a new user
 Route::put('/users/{user}', [UserController::class, 'update']); // Update a user (full update)
 Route::patch('/users/{user}', [UserController::class, 'update']); // Update a user (partial update)
 Route::delete('/users/{user}', [UserController::class, 'delete']); // Delete a user
