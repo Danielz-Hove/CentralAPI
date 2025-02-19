@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Str; // For generating a random token
 
 class UserController extends Controller
 {
@@ -20,22 +21,31 @@ class UserController extends Controller
      */
     public function create(Request $request)
     {
-    // Validate the incoming request data
-    $validated = $request->validate([
-        'name' => 'required|string|max:255',
-        'email' => 'required|email|unique:users,email',
-        'password' => 'required|string|min:8|confirmed',
-    ]);
+        // Validate the incoming request data
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|string|min:8|confirmed',
+        ]);
 
-    // Create the user after validation
-    $user = User::create([
-        'name' => $validated['name'],
-        'email' => $validated['email'],
-        'password' => bcrypt($validated['password']),
-    ]);
+        // Create the user after validation
+        $user = User::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => bcrypt($validated['password']),
+        ]);
 
-    // Return JSON response with the user details
-    return response()->json(['message' => 'User created successfully', 'user' => $user], 201);
+        // Generate API token
+        $token = Str::random(60); // Generate a random string of 60 characters
+        $user->api_token = $token;   // Assign the token to the user model
+        $user->save();                  // Save the user to the database
+
+        // Return JSON response with the user details and token
+        return response()->json([
+            'message' => 'User created successfully',
+            'user' => $user,
+            'token' => $token // Include token in the response
+        ], 201);
     }
 
     /**
@@ -57,23 +67,23 @@ class UserController extends Controller
             'email' => 'nullable|email|unique:users,email,' . $id,
             'password' => 'nullable|string|min:8|confirmed',
         ]);
-    
+
         // Retrieve the user by ID
         $user = User::find($id);
-    
+
         // If the user is not found, return a 404 response
         if (!$user) {
             return response()->json(['message' => 'User not found'], 404);
         }
-    
+
         // Hash the password if it is provided
         if (isset($validated['password'])) {
             $validated['password'] = bcrypt($validated['password']);
         }
-    
+
         // Update the user with the validated data
         $user->update(array_filter($validated));
-    
+
         // Return a success response with the updated user
         return response()->json(['message' => 'User updated successfully', 'user' => $user], 200);
     }
@@ -85,15 +95,15 @@ class UserController extends Controller
     {
         // Attempt to find the user by ID
         $user = User::find($id);
-    
+
         // Check if the user exists
         if (!$user) {
             return response()->json(['error' => 'User not found'], 404);
         }
-    
+
         // Delete the user
         $user->delete();
-    
+
         // Return a success response
         return response()->json(['message' => 'User removed successfully'], 200);
     }
@@ -107,16 +117,3 @@ class UserController extends Controller
         return $user ? response()->json($user, 200) : response()->json(['message' => 'User not found'], 404);
     }
 }
-
-//The UserController  class contains the following methods: 
- 
-//list() : This method returns a list of all users. 
-//create() : This method creates a new user. 
-//index() : This method returns a specific user by ID. 
-//update() : This method updates a specific user by ID. 
-//delete() : This method deletes a specific user by ID. 
-//findUserById() : This is a helper method that finds a user by ID. 
- 
-//Step 4: Create a Route 
-//Next, you need to create a route to access the  UserController  methods. 
-//Open the  routes/api.php  file and add the following code:

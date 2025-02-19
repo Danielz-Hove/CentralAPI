@@ -19,18 +19,23 @@ Route::patch('/users/{user}', [UserController::class, 'update']); // Update a us
 Route::delete('/users/{user}', [UserController::class, 'delete']); // Delete a user
 
 
-// GET /api/customers (Index - List all customers)
-Route::get('/customers', [CustomerController::class, 'index'])->middleware('auth:sanctum');
 
-// POST /api/customers (Store - Create a new customer)
-Route::post('/customers', [CustomerController::class, 'store'])->middleware('auth:sanctum');
 
-// GET /api/customers/{customer} (Show - Get a specific customer by ID)
-Route::get('/customers/{customer}', [CustomerController::class, 'show'])->middleware('auth:sanctum');
+Route::middleware(['Authentication'])->group(function () {
 
-// PUT/PATCH /api/customers/{customer} (Update - Update an existing customer)
-Route::put('/customers/{customer}', [CustomerController::class, 'update'])->middleware('auth:sanctum');  // PUT (replace)
-Route::patch('/customers/{customer}', [CustomerController::class, 'update'])->middleware('auth:sanctum'); // PATCH (partial update - often more common)
+    // GET /api/customers (Index - List all customers)
+    Route::get('/customers', [CustomerController::class, 'index']);
 
-// DELETE /api/customers/{customer} (Destroy - Delete a customer)
-Route::delete('/customers/{customer}', [CustomerController::class, 'destroy'])->middleware('auth:sanctum');
+    // POST /api/customers (Store - Create a new customer)
+    Route::post('/customers', [CustomerController::class, 'store']);
+
+    // GET /api/customers/{customer} (Show - Get a specific customer by ID)
+    Route::get('/customers/{customer}', [CustomerController::class, 'show']);
+
+    // PUT/PATCH /api/customers/{customer} (Update - Update an existing customer)
+    Route::put('/customers/{customer}', [CustomerController::class, 'update']);  // PUT (replace)
+    Route::patch('/customers/{customer}', [CustomerController::class, 'update']); // PATCH (partial update - often more common)
+
+    // DELETE /api/customers/{customer} (Destroy - Delete a customer)
+    Route::delete('/customers/{customer}', [CustomerController::class, 'destroy']);
+});
