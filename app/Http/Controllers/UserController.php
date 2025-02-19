@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash; // Make sure to import the Hash facade
 use Illuminate\Support\Str; // For generating a random token
 
 class UserController extends Controller
@@ -32,13 +33,11 @@ class UserController extends Controller
         $user = User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
-            'password' => bcrypt($validated['password']),
+            'password' => Hash::make($validated['password']), // Use Hash::make, not bcrypt
         ]);
 
-        // Generate API token
-        $token = Str::random(60); // Generate a random string of 60 characters
-        $user->api_token = $token;   // Assign the token to the user model
-        $user->save();                  // Save the user to the database
+        // Generate a Sanctum token
+        $token = $user->createToken('api-token')->plainTextToken;
 
         // Return JSON response with the user details and token
         return response()->json([
@@ -78,7 +77,7 @@ class UserController extends Controller
 
         // Hash the password if it is provided
         if (isset($validated['password'])) {
-            $validated['password'] = bcrypt($validated['password']);
+            $validated['password'] = Hash::make($validated['password']);
         }
 
         // Update the user with the validated data
